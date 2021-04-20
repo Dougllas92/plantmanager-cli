@@ -19,11 +19,11 @@ const colors = {
 };
 
 const sizes = {
-  title: 32,
-  subtitle: 24,
-  medium: 17,
-  body: 15,
-  caption: 13
+  title: '32px',
+  subtitle: '24px',
+  medium: '17px',
+  body: '15px',
+  caption: '13px'
 };
 
-export { colors, sizes };
+export default { colors, sizes };

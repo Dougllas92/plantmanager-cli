@@ -1,10 +1,8 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Welcome } from './src/screens/Welcome/Welcome';
 
 export default function App() {
   return (
-    <View>
-      <Text>Ola Mundão</Text>
-    </View>
+    <Welcome />
   )
 }
