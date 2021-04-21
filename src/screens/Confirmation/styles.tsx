@@ -4,21 +4,12 @@ import theme from '../../styles/theme';
 export const Wrapper = styled.SafeAreaView`
   flex: 1;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   background-color: #FFF;
   width: 100%;
 `;
-
-export const Form = styled.View`
-  flex: 1;
-  padding: 0px 50px;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-`;
-
 export const Icon = styled.Text`
-  font-size: 36px;
+  font-size: 96px;
 `;
 
 export const Title = styled.Text`
@@ -29,16 +20,15 @@ export const Title = styled.Text`
   font-family: ${theme.family.heading};
 `;
 
-export const Input = styled.TextInput`
-  border-bottom-width: 1px;
-  color: ${theme.colors.heading};
-  text-align: center;
-  padding: 12px;
-  width: 100%;
+export const SubTitle = styled.Text`
   font-size: ${theme.sizes.medium};
+  line-height: 25px;
+  color: ${theme.colors.body_dark};
+  text-align: center;
+  font-family: ${theme.family.text};
 `;
 
 export const Footer = styled.View`
-  padding: 0px 20px;
+  padding: 0px 100px;
   width: 100%;
 `;

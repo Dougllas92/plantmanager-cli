@@ -1,8 +1,8 @@
 import React from 'react';
-import { UserIdentification } from './src/screens/UserIdentification';
+import { Confirmation } from './src/screens/Confirmation';
 
 export default function App() {
   return (
-    <UserIdentification />
+    <Confirmation />
   )
 }

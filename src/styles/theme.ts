@@ -26,4 +26,10 @@ const sizes = {
   caption: '13px'
 };
 
-export default { colors, sizes };
+const family = {
+  heading: 'Jost-SemiBold',
+  text: 'Jost-Regular',
+  complement: 'Jost-Regular'
+}
+
+export default { colors, sizes, family };
