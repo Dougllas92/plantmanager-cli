@@ -1,8 +1,8 @@
 import React from 'react';
-import { Welcome } from './src/screens/Welcome/Welcome';
+import { UserIdentification } from './src/screens/UserIdentification';
 
 export default function App() {
   return (
-    <Welcome />
+    <UserIdentification />
   )
 }
