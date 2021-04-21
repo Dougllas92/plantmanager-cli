@@ -7,7 +7,10 @@ import {
   Button
 } from './styles';
 
+import Icon from 'react-native-vector-icons/Feather';
+
 import wateringImg from '../../assets/watering.png';
+import theme from '../../styles/theme';
 
 
 export function Welcome() {
@@ -28,7 +31,7 @@ export function Welcome() {
       </Subtitle>
 
       <Button>
-
+        <Icon name="chevron-right" size={24} color={theme.colors.white} />
       </Button>
 
     </Wrapper>
