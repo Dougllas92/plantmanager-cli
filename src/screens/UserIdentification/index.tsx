@@ -58,7 +58,9 @@ export function UserIdentification() {
 
         <SizedBox height={40} width={0} />
         <Footer>
-          <Button title="Confirmar" />
+          <Button
+            title="Confirmar"
+          />
         </Footer>
       </Form>
     </Wrapper>
