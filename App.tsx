@@ -1,8 +1,9 @@
+import 'react-native-gesture-handler';
 import React from 'react';
-import { Confirmation } from './src/screens/Confirmation';
+import Routes from './src/routes';
 
 export default function App() {
   return (
-    <Confirmation />
+    <Routes />
   )
 }
