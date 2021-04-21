@@ -4,10 +4,11 @@ import {
   Title,
   Image,
   Subtitle,
+  Button
 } from './styles';
 
 import wateringImg from '../../assets/watering.png';
-import { Button } from '../../components/Button';
+
 
 export function Welcome() {
   return (
@@ -26,7 +27,9 @@ export function Welcome() {
         sempre que precisar.
       </Subtitle>
 
-      <Button title='>' />
+      <Button>
+
+      </Button>
 
     </Wrapper>
   )

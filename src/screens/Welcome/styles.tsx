@@ -29,3 +29,13 @@ export const Subtitle = styled.Text`
   margin-bottom: 50px;
   line-height: 25px;
 `;
+
+export const Button = styled.TouchableOpacity`
+  background-color: ${theme.colors.green};
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+`;
