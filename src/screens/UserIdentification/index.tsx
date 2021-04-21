@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   Wrapper,
@@ -18,6 +19,8 @@ export function UserIdentification() {
   const [isFilled, setIsFilled] = useState(false);
   const [name, setName] = useState<string>();
 
+  const navigation = useNavigation();
+
   function handleFocused() {
     setIsFocused(true);
 
@@ -31,6 +34,10 @@ export function UserIdentification() {
   function handleChange(value: string) {
     setIsFilled(!!value)
     setName(value);
+  }
+
+  function handleNavigateToConfirmation() {
+    navigation.navigate('Confirmation');
   }
 
   return (
@@ -60,6 +67,7 @@ export function UserIdentification() {
         <Footer>
           <Button
             title="Confirmar"
+            onPress={handleNavigateToConfirmation}
           />
         </Footer>
       </Form>

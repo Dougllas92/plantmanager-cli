@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 import {
   Wrapper,
   Title,
@@ -14,6 +15,12 @@ import theme from '../../styles/theme';
 
 
 export function Welcome() {
+  const navigation = useNavigation();
+
+  function handleNavigateToUserIdentification() {
+    navigation.navigate('UserIdentification');
+  }
+
   return (
     <Wrapper>
       <Title>
@@ -30,7 +37,9 @@ export function Welcome() {
         sempre que precisar.
       </Subtitle>
 
-      <Button>
+      <Button
+        onPress={handleNavigateToUserIdentification}
+      >
         <Icon name="chevron-right" size={24} color={theme.colors.white} />
       </Button>
 
