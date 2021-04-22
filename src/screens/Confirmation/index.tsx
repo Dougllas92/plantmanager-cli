@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/core';
 
 import {
   Wrapper,
@@ -12,6 +13,12 @@ import { SizedBox } from '../../components/SizedBox';
 import { Button } from '../../components/Button';
 
 export function Confirmation() {
+  const navigation = useNavigation();
+
+  function navigateToPlantsSelect() {
+    navigation.navigate('PlantsSelect');
+  }
+
   return (
     <Wrapper>
       <Icon>😄</Icon>
@@ -29,6 +36,7 @@ export function Confirmation() {
       <Footer>
         <Button
           title="Começar"
+          onPress={navigateToPlantsSelect}
         />
       </Footer>
     </Wrapper>
