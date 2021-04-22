@@ -15,16 +15,16 @@ export function Confirmation() {
   return (
     <Wrapper>
       <Icon>😄</Icon>
-      <SizedBox height={60} width={0} />
+      <SizedBox height={60} />
       <Title>
         Prontinho
       </Title>
-      <SizedBox height={16} width={0} />
+      <SizedBox height={16} />
       <SubTitle>
         Agora vamos começar a cuidar da suas {'\n'}
           plantinhas com muito cuidado.
         </SubTitle>
-      <SizedBox height={40} width={0} />
+      <SizedBox height={40} />
 
       <Footer>
         <Button
