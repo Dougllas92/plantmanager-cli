@@ -9,6 +9,8 @@ import {
   Footer
 } from './styles';
 
+import { SvgUri } from 'react-native-svg';
+
 import { SizedBox } from '../../components/SizedBox';
 import { Button } from '../../components/Button';
 
@@ -27,6 +29,7 @@ export function Confirmation() {
         Prontinho
       </Title>
       <SizedBox height={16} />
+
       <SubTitle>
         Agora vamos começar a cuidar da suas {'\n'}
           plantinhas com muito cuidado.
@@ -39,6 +42,7 @@ export function Confirmation() {
           onPress={navigateToPlantsSelect}
         />
       </Footer>
+
     </Wrapper>
   )
 }
