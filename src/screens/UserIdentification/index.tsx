@@ -10,6 +10,8 @@ import {
   Footer
 } from './styles';
 
+import { Alert } from 'react-native';
+
 import { SizedBox } from '../../components/SizedBox';
 import { Button } from '../../components/Button';
 import theme from '../../styles/theme';
@@ -37,6 +39,9 @@ export function UserIdentification() {
   }
 
   function handleNavigateToConfirmation() {
+    if (!name)
+      return Alert.alert('Me diz como podemos chamar você 😢');
+
     navigation.navigate('Confirmation');
   }
 
