@@ -21,8 +21,18 @@ export const SubTitle = styled.Text`
   color: ${theme.colors.heading};
 `;
 
-export const Environment = styled.View``;
-
-export const FlatEnvironment = styled.FlatList`
+export const Environment = styled.View`
   height: 40px;
 `;
+
+export const FlatEnvironment = styled.FlatList``;
+
+export const Plants = styled.View`
+  flex: 1;
+  padding: 0px 32px;
+  justify-content: center;
+`;
+
+export const FlatPlants = styled.FlatList``;
+
+export const LoadActive = styled.ActivityIndicator``;

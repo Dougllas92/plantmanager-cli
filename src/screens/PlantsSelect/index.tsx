@@ -6,12 +6,20 @@ import {
   SubTitle,
   Environment,
   FlatEnvironment,
+  Plants,
+  FlatPlants,
+  LoadActive
 } from './styles';
 
 import { Header } from '../../components/Header';
 import { SizedBox } from '../../components/SizedBox';
 import { EnvironmentButton } from '../../components/EnvironmentButton';
+import { PlantCardPrimary } from '../../components/PlantCardPrimary';
+import { Load } from '../../components/Load';
+
+
 import api from '../../services/api';
+import theme from '../../styles/theme';
 
 
 
@@ -20,18 +28,93 @@ interface EnvironmentProps {
   title: string;
 }
 
-export function PlantsSelect() {
+interface PlantProps {
+  id: string;
+  name: string;
+  about: string;
+  water_tips: string;
+  photo: string;
+  environments: [string];
+  frequency: {
+    times: number;
+    repeat_every: string;
+  }
+}
 
+export function PlantsSelect() {
   const [environments, setEnvironments] = useState<EnvironmentProps[]>([]);
+  const [plants, setPlants] = useState<PlantProps[]>([]);
+  const [filteredPlants, setFilteredPlants] = useState<PlantProps[]>([]);
+  const [environmentsSelected, setEnvironmentSelected] = useState('all');
+  const [loading, setLoading] = useState(true);
+
+  //State para trabalhar com a paginação
+  const [page, setPage] = useState(1);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [loadedAll, setLoadedAll] = useState(false);
+
 
   async function fetchEnvironment() {
     const data = await api.fetchEnvironment();
-    setEnvironments(data);
+    setEnvironments([
+      {
+        key: 'all',
+        title: 'Todos',
+      },
+      ...data
+    ]);
+  }
+
+  async function fetchPlants() {
+    const data = await api.fetchPlants(page);
+
+    if (!data)
+      return setLoading(true);
+
+    if (page > 1) {
+      setPlants(oldValue => [...oldValue, ...data])
+      setFilteredPlants(oldValue => [...oldValue, ...data])
+    } else {
+      setPlants(data);
+      setFilteredPlants(data);
+    }
+    setLoading(false);
+  }
+
+  function handleFetchMore(distance: number) {
+    if (distance < 1)
+      return;
+
+    setLoadingMore(true);
+    setPage(oldValue => oldValue + 1);
+    fetchPlants();
+  }
+
+  function handleEnvironmentSelected(environment: string) {
+    setEnvironmentSelected(environment);
+
+    //Verifica se o ambiente seleciona é o todos se for cancela o filtro
+    // e retorna os dados que ja tinham vindo da API
+    if (environment === 'all')
+      return setFilteredPlants(plants);
+
+    const filtered = plants.filter(plant =>
+      plant.environments.includes(environment)
+    );
+
+    setFilteredPlants(filtered);
   }
 
   useEffect(() => {
     fetchEnvironment();
   }, []);
+
+  useEffect(() => {
+    fetchPlants();
+  }, []);
+
+  if (loading)
+    return <Load />
 
   return (
     <Wrapper>
@@ -46,16 +129,40 @@ export function PlantsSelect() {
 
       <SizedBox height={24} />
 
-      <FlatEnvironment
-        data={environments}
-        renderItem={({ key, title }: EnvironmentProps) => (
-          <EnvironmentButton title={title} />
-        )}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ marginLeft: 32 }}
+      <Environment>
+        <FlatEnvironment
+          data={environments}
+          //@ts-ignore
+          renderItem={({ item }: { item: EnvironmentProps }) => (
+            <EnvironmentButton
+              title={item.title}
+              active={item.key === environmentsSelected}
+              onPress={() => handleEnvironmentSelected(item.key)}
+            />
+          )}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ marginLeft: 32, paddingRight: 32 }}
+        />
+      </Environment>
 
-      />
+      <SizedBox height={40} />
+      <Plants>
+        <FlatPlants
+          data={filteredPlants}
+          // @ts-ignore
+          renderItem={({ item }: { item: PlantProps }) => (
+            <PlantCardPrimary data={item} />
+          )}
+          showsVerticalScrollIndicator={false}
+          numColumns={2}
+          onEndReachedThreshold={0.1}
+          onEndReached={({ distanceFromEnd }) => handleFetchMore(distanceFromEnd)}
+          ListFooterComponent={
+            loadingMore ? <LoadActive color={theme.colors.green} /> : <></>
+          }
+        />
+      </Plants>
 
     </Wrapper>
   )
