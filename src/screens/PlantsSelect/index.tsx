@@ -79,6 +79,7 @@ export function PlantsSelect() {
       setFilteredPlants(data);
     }
     setLoading(false);
+    setLoadingMore(false);
   }
 
   function handleFetchMore(distance: number) {
