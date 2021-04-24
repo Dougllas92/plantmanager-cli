@@ -20,6 +20,7 @@ import { Load } from '../../components/Load';
 
 import api from '../../services/api';
 import theme from '../../styles/theme';
+import { useNavigation } from '@react-navigation/core';
 
 
 
@@ -51,7 +52,8 @@ export function PlantsSelect() {
   //State para trabalhar com a paginação
   const [page, setPage] = useState(1);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [loadedAll, setLoadedAll] = useState(false);
+
+  const navigation = useNavigation();
 
 
   async function fetchEnvironment() {
@@ -106,6 +108,10 @@ export function PlantsSelect() {
     setFilteredPlants(filtered);
   }
 
+  function navigateToPlantSave(plant: PlantProps) {
+    navigation.navigate('PlantSave', { plant });
+  }
+
   useEffect(() => {
     fetchEnvironment();
   }, []);
@@ -134,6 +140,8 @@ export function PlantsSelect() {
         <FlatEnvironment
           data={environments}
           //@ts-ignore
+          keyExtractor={(item) => String(item.key)}
+          //@ts-ignore
           renderItem={({ item }: { item: EnvironmentProps }) => (
             <EnvironmentButton
               title={item.title}
@@ -151,9 +159,14 @@ export function PlantsSelect() {
       <Plants>
         <FlatPlants
           data={filteredPlants}
+          //@ts-ignore
+          keyExtractor={(item) => String(item.id)}
           // @ts-ignore
           renderItem={({ item }: { item: PlantProps }) => (
-            <PlantCardPrimary data={item} />
+            <PlantCardPrimary
+              data={item}
+              onPress={() => navigateToPlantSave(item)}
+            />
           )}
           showsVerticalScrollIndicator={false}
           numColumns={2}
