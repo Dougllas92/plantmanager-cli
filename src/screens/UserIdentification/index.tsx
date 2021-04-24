@@ -11,6 +11,7 @@ import {
 } from './styles';
 
 import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { SizedBox } from '../../components/SizedBox';
 import { Button } from '../../components/Button';
@@ -38,9 +39,11 @@ export function UserIdentification() {
     setName(value);
   }
 
-  function handleNavigateToConfirmation() {
+  async function handleNavigateToConfirmation() {
     if (!name)
       return Alert.alert('Me diz como podemos chamar você 😢');
+
+    await AsyncStorage.setItem('@plantmanager:user', name);
 
     navigation.navigate('Confirmation');
   }
