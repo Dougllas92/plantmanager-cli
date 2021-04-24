@@ -29,7 +29,6 @@ const sizes = {
 const family = {
   heading: 'Jost-SemiBold',
   text: 'Jost-Regular',
-  complement: 'Jost-Regular'
 }
 
 export default { colors, sizes, family };
