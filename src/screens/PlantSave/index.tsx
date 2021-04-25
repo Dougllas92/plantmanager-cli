@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useRoute } from '@react-navigation/core';
-import { Platform } from 'react-native';
+import { Alert, Platform } from 'react-native';
 import DateTimePicker, { Event } from '@react-native-community/datetimepicker';
+import { format, isBefore } from 'date-fns';
 
 import {
   Wrapper,
@@ -12,7 +13,9 @@ import {
   CardTipContainer,
   CardTipImage,
   CardTipText,
-  AlertLabel
+  AlertLabel,
+  DateTimePickerButton,
+  DateTimePickerText
 } from './styles';
 
 import { SvgFromUri } from 'react-native-svg';
@@ -39,10 +42,29 @@ interface Params {
 
 export function PlantSave() {
   const [selectedDateTime, setSelectDateTime] = useState(new Date);
-  const [showDatePicker, setShowDatePicker] = useState(Platform.OS == 'ios');
+  const [showDatePicker, setShowDatePicker] = useState(Platform.OS === 'ios');
 
   const route = useRoute();
   const { plant } = route.params as Params;
+
+
+  function handleChangeTime(event: Event, dateTime: Date | undefined) {
+    if (Platform.OS === 'android') {
+      setShowDatePicker(oldState => !oldState);
+    }
+
+    if (dateTime && isBefore(dateTime, new Date())) {
+      setSelectDateTime(new Date());
+      return Alert.alert('Escolha uma hora no futuro! ⏰');
+    }
+
+    if (dateTime)
+      setSelectDateTime(dateTime);
+  }
+
+  function handleOpenDatetimePickerForAndroid() {
+    setShowDatePicker(oldState => !oldState);
+  }
 
   return (
     <Wrapper>
@@ -70,13 +92,25 @@ export function PlantSave() {
           Ecolha o melhor horário para ser lembrado:
         </AlertLabel>
 
-        <DateTimePicker
-          value={selectedDateTime}
-          mode='time'
-          display='spinner'
-          onChange={() => { }}
-        />
-
+        <SizedBox height={30} />
+        {showDatePicker && (
+          <DateTimePicker
+            value={selectedDateTime}
+            mode='time'
+            display='spinner'
+            onChange={handleChangeTime}
+          />
+        )}
+        {
+          Platform.OS === 'android' && (
+            <DateTimePickerButton onPress={handleOpenDatetimePickerForAndroid}>
+              <DateTimePickerText>
+                {`Mudar alarme ${format(selectedDateTime, 'HH:mm')}`}
+              </DateTimePickerText>
+            </DateTimePickerButton>
+          )
+        }
+        <SizedBox height={30} />
         <Button title='Cadastrar planta' />
         <SizedBox height={20} />
       </Controller>

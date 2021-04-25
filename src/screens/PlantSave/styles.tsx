@@ -62,3 +62,16 @@ export const AlertLabel = styled.Text`
   font-family: ${theme.family.text};
   font-size: ${theme.sizes.caption};
 `;
+
+export const DateTimePickerButton = styled.TouchableOpacity`
+  width: 100%;
+  align-items: center;
+  padding: 0px 40px;
+`;
+
+export const DateTimePickerText = styled.Text`
+  color: ${theme.colors.heading};
+  font-size: ${theme.sizes.subtitle};
+  font-family: ${theme.family.text};
+
+`;
