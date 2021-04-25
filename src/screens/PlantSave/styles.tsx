@@ -1,7 +1,10 @@
 import styled from 'styled-components/native';
 import theme from '../../styles/theme';
 
-export const Wrapper = styled.View`
+export const Wrapper = styled.ScrollView`
+  flex: 1;
+`;
+export const Container = styled.View`
   flex: 1;
   justify-content: space-between;
   background-color: ${theme.colors.shape};

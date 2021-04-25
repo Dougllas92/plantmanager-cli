@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useRoute } from '@react-navigation/core';
+import { useNavigation, useRoute } from '@react-navigation/core';
 import { Alert, Platform } from 'react-native';
 import DateTimePicker, { Event } from '@react-native-community/datetimepicker';
 import { format, isBefore } from 'date-fns';
@@ -15,7 +15,8 @@ import {
   CardTipText,
   AlertLabel,
   DateTimePickerButton,
-  DateTimePickerText
+  DateTimePickerText,
+  Container
 } from './styles';
 
 import { SvgFromUri } from 'react-native-svg';
@@ -24,26 +25,17 @@ import { Button } from '../../components/Button';
 import { SizedBox } from '../../components/SizedBox';
 
 import waterdrop from '../../assets/waterdrop.png';
+import { loadPlants, PlantProps, savePlant } from '../../libs/storage';
 
 interface Params {
-  plant: {
-    id: string;
-    name: string;
-    about: string;
-    water_tips: string;
-    photo: string;
-    environments: [string];
-    frequency: {
-      times: number;
-      repeat_every: string;
-    }
-  }
+  plant: PlantProps
 }
 
 export function PlantSave() {
   const [selectedDateTime, setSelectDateTime] = useState(new Date);
   const [showDatePicker, setShowDatePicker] = useState(Platform.OS === 'ios');
 
+  const navigation = useNavigation();
   const route = useRoute();
   const { plant } = route.params as Params;
 
@@ -66,54 +58,80 @@ export function PlantSave() {
     setShowDatePicker(oldState => !oldState);
   }
 
+  async function handleSave() {
+    try {
+      await savePlant({
+        ...plant,
+        dateTimeNotification: selectedDateTime
+      });
+
+      navigation.navigate('Confirmation', {
+        title: 'Tudo certo',
+        subtitle: 'Fique tranquilo que sempre vamos lembrar você de cuidar da sua plantinha com bastante amor.',
+        buttonTitle: 'Muito obrigado :D',
+        icon: 'hug',
+        nextScreen: 'MyPlants'
+      });
+    } catch {
+      Alert.alert('Não foi possivel salvar. 😥');
+    }
+  }
+
   return (
-    <Wrapper>
-      <PlantInfo>
-        <SvgFromUri
-          uri={plant.photo}
-          height={180}
-          width={180}
-        />
+    <Wrapper
+      showsVerticalScrollIndicator={false}
+    >
+      <Container>
 
-        <PlantName>{plant.name}</PlantName>
+        <PlantInfo>
+          <SvgFromUri
+            uri={plant.photo}
+            height={180}
+            width={180}
+          />
 
-        <SizedBox height={16} />
-        <PlantAbout>{plant.about}</PlantAbout>
-      </PlantInfo>
-      <Controller>
-        <CardTipContainer>
-          <CardTipImage source={waterdrop} />
+          <PlantName>{plant.name}</PlantName>
 
-          <SizedBox width={24} />
-          <CardTipText>{plant.water_tips}</CardTipText>
-        </CardTipContainer>
+          <SizedBox height={16} />
+          <PlantAbout>{plant.about}</PlantAbout>
+        </PlantInfo>
 
-        <AlertLabel>
-          Ecolha o melhor horário para ser lembrado:
+        <SizedBox height={32} />
+        <Controller>
+          <CardTipContainer>
+            <CardTipImage source={waterdrop} />
+
+            <SizedBox width={24} />
+            <CardTipText>{plant.water_tips}</CardTipText>
+          </CardTipContainer>
+
+          <AlertLabel>
+            Ecolha o melhor horário para ser lembrado:
         </AlertLabel>
 
-        <SizedBox height={30} />
-        {showDatePicker && (
-          <DateTimePicker
-            value={selectedDateTime}
-            mode='time'
-            display='spinner'
-            onChange={handleChangeTime}
-          />
-        )}
-        {
-          Platform.OS === 'android' && (
-            <DateTimePickerButton onPress={handleOpenDatetimePickerForAndroid}>
-              <DateTimePickerText>
-                {`Mudar alarme ${format(selectedDateTime, 'HH:mm')}`}
-              </DateTimePickerText>
-            </DateTimePickerButton>
-          )
-        }
-        <SizedBox height={30} />
-        <Button title='Cadastrar planta' />
-        <SizedBox height={20} />
-      </Controller>
+          <SizedBox height={30} />
+          {showDatePicker && (
+            <DateTimePicker
+              value={selectedDateTime}
+              mode='time'
+              display='spinner'
+              onChange={handleChangeTime}
+            />
+          )}
+          {
+            Platform.OS === 'android' && (
+              <DateTimePickerButton onPress={handleOpenDatetimePickerForAndroid}>
+                <DateTimePickerText>
+                  {`Mudar alarme ${format(selectedDateTime, 'HH:mm')}`}
+                </DateTimePickerText>
+              </DateTimePickerButton>
+            )
+          }
+          <SizedBox height={30} />
+          <Button title='Cadastrar planta' onPress={handleSave} />
+          <SizedBox height={20} />
+        </Controller>
+      </Container>
     </Wrapper>
   )
 }
