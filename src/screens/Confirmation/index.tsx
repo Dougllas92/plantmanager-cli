@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation, useRoute } from '@react-navigation/core';
 
 import {
   Wrapper,
@@ -9,36 +9,51 @@ import {
   Footer
 } from './styles';
 
-import { SvgUri } from 'react-native-svg';
-
 import { SizedBox } from '../../components/SizedBox';
 import { Button } from '../../components/Button';
 
+interface Params {
+  title: string,
+  subtitle: string,
+  buttonTitle: string,
+  icon: 'smile' | 'hug',
+  nextScreen: string;
+}
+
+const emojis = {
+  hug: '🤗',
+  smile: '😄'
+}
+
 export function Confirmation() {
   const navigation = useNavigation();
+  const routes = useRoute();
+
+  const {
+    title,
+    subtitle,
+    buttonTitle,
+    icon,
+    nextScreen
+  } = routes.params as Params;
 
   function navigateToPlantsSelect() {
-    navigation.navigate('PlantsSelect');
+    navigation.navigate(nextScreen);
   }
 
   return (
     <Wrapper>
-      <Icon>😄</Icon>
+      <Icon>{emojis[icon]}</Icon>
       <SizedBox height={60} />
-      <Title>
-        Prontinho
-      </Title>
+      <Title>{title}</Title>
       <SizedBox height={16} />
 
-      <SubTitle>
-        Agora vamos começar a cuidar da suas {'\n'}
-          plantinhas com muito cuidado.
-        </SubTitle>
+      <SubTitle>{subtitle}</SubTitle>
       <SizedBox height={40} />
 
       <Footer>
         <Button
-          title="Começar"
+          title={buttonTitle}
           onPress={navigateToPlantsSelect}
         />
       </Footer>
