@@ -3,6 +3,7 @@ import theme from '../../styles/theme';
 
 export const Wrapper = styled.View`
   flex: 1;
+  background-color: ${theme.colors.white};
 `;
 
 export const HeaderPlants = styled.View`
