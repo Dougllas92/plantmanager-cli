@@ -8,12 +8,13 @@
 
 Após o fim da NLW #5 dei continuidade ao projeto que ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas: 
 
-- [ ] Tela de preload - Verificar se já existe um usuário criado no sistema.
-- [ ] Tela UserIdentification - Opção de inserir foto e desabilitar button caso TextInput esteja vazio.
-- [ ] Tela de Perfil - Usuário poder trocar nome e foto.
-- [ ] Tela PlantsSelect - Criar animação no flatlist ir diminuindo o espaço do Header.
-- [ ] MyPlants - Adicionar mensagem quando o usuário não tiver nenhuma planta ainda.
-- [ ] MyPlants - Alterar Alert para Modal personalizada.
+- [x] Adicionar firebase - *Trocar o server.json pelo firestore*
+- [x] Tela de preload - *Verificar se já existe um usuário criado no sistema.*
+- [ ] Tela UserIdentification - *Opção de inserir foto e desabilitar button caso TextInput esteja vazio.*
+- [ ] Tela de Perfil - *Usuário poder trocar nome e foto.*
+- [ ] Tela PlantsSelect - *Criar animação no flatlist ir diminuindo o espaço do Header.*
+- [ ] MyPlants - *Adicionar mensagem quando o usuário não tiver nenhuma planta ainda.*
+- [ ] MyPlants - *Alterar Alert para Modal personalizada.*
 
 ### 🧪 Tecnologias
  * Node.js
