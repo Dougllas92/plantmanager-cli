@@ -10,17 +10,15 @@ import { useNavigation } from '@react-navigation/core';
 export function Preload() {
   const navigation = useNavigation();
 
-
   useEffect(() => {
     async function fetchUsername() {
       const checkUser = await AsyncStorage.getItem('@plantmanager:user');
 
-      // if (checkUser !== null) {
-      //   navigation.navigate('PlantsSelect');
-      // } else {
-      //   navigation.navigate('Welcome');
-      // }
-
+      if (checkUser !== null) {
+        navigation.navigate('PlantsSelect');
+      } else {
+        navigation.navigate('Welcome');
+      }
     }
 
     fetchUsername();
