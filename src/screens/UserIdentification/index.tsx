@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import ImagePicker from 'react-native-image-crop-picker';
 
 import {
   Wrapper,
   Form,
   Icon,
   Title,
+  UserButton,
+  UserImage,
+  UserIcon,
   Input,
   Footer
 } from './styles';
@@ -17,16 +21,18 @@ import { SizedBox } from '../../components/SizedBox';
 import { Button } from '../../components/Button';
 import theme from '../../styles/theme';
 
+import userIcon from '../../assets/user_icon.png';
+
 export function UserIdentification() {
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
   const [name, setName] = useState<string>();
+  const [image, setImage] = useState<string>();
 
   const navigation = useNavigation();
 
   function handleFocused() {
     setIsFocused(true);
-
   }
 
   function handleBlur() {
@@ -37,6 +43,16 @@ export function UserIdentification() {
   function handleChange(value: string) {
     setIsFilled(!!value)
     setName(value);
+  }
+
+  function chooseFromLibrary() {
+    ImagePicker.openPicker({
+      width: 250,
+      height: 250,
+      cropping: true
+    }).then(image => {
+      setImage(image.path);
+    });
   }
 
   async function handleNavigateToConfirmation() {
@@ -68,8 +84,14 @@ export function UserIdentification() {
           Como podemos {'\n'}
           chamar você?
         </Title>
-        <SizedBox height={40} width={0} />
+        <SizedBox height={24} width={0} />
 
+        <UserButton onPress={chooseFromLibrary}>
+          <UserImage source={!!image ? { uri: image } : userIcon} />
+          <UserIcon />
+        </UserButton>
+
+        <SizedBox height={24} width={0} />
         <Input
           style={{
             borderColor: (isFocused || isFilled) ? theme.colors.green : theme.colors.gray
@@ -85,6 +107,7 @@ export function UserIdentification() {
         <Footer>
           <Button
             title="Confirmar"
+            disabled={!name}
             onPress={handleNavigateToConfirmation}
           />
         </Footer>
