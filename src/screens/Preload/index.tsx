@@ -1,28 +1,29 @@
 import React, { useEffect } from 'react';
-import { Wrapper, Load } from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { Wrapper, Load } from './styles';
+import { useNavigation } from '@react-navigation/core';
 
 import Logo from '../../assets/logo_plantmanager.svg';
 import LoadIcon from '../../assets/load-circle.json';
 import { SizedBox } from '../../components/SizedBox';
-import { useNavigation } from '@react-navigation/core';
 
 export function Preload() {
   const navigation = useNavigation();
 
   useEffect(() => {
-    async function fetchUsername() {
-      const checkUser = await AsyncStorage.getItem('@plantmanager:user');
+    setTimeout(() => {
+      async function fetchUsername() {
+        const checkUser = await AsyncStorage.getItem('@plantmanager:user');
 
-      if (checkUser !== null) {
-        navigation.navigate('PlantsSelect');
-      } else {
-        navigation.navigate('Welcome');
+        if (checkUser !== null) {
+          navigation.navigate('PlantsSelect');
+        } else {
+          navigation.navigate('Welcome');
+        }
       }
-    }
-
-    fetchUsername();
-
+      fetchUsername();
+    }, 1300);
   }, []);
 
   return (
