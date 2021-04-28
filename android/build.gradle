@@ -38,5 +38,10 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://www.jitpack.io' }
+
+        
+        //crop image-crop-picker
+        maven { url 'https://maven.google.com' }
+  
     }
 }
