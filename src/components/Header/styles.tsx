@@ -28,3 +28,5 @@ export const Image = styled.Image`
   height: 56px;
   border-radius: 28px;
 `;
+
+export const ImageButton = styled.TouchableOpacity``;

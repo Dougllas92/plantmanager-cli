@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/core';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
   CardHeader,
   CardGeet,
   Geetings,
   Username,
-  Image
+  Image,
+  ImageButton
 } from './styles';
 
 import userIcon from '../../assets/user_icon.png';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function Header() {
   const [userName, setUserName] = useState<string>();
   const [userImage, setUserImage] = useState<string>();
+
+  const navigation = useNavigation();
 
   async function loadStorageUserName() {
     const user = await AsyncStorage.getItem('@plantmanager:user');
@@ -22,6 +27,9 @@ export function Header() {
     setUserImage(image || '');
   }
 
+  function navigateToPerfil() {
+    navigation.navigate('UserIdentification');
+  }
 
   useEffect(() => {
     loadStorageUserName();
@@ -33,7 +41,9 @@ export function Header() {
         <Geetings>Olá,</Geetings>
         <Username>{userName}</Username>
       </CardGeet>
-      <Image source={!!userImage ? { uri: userImage } : userIcon} />
+      <ImageButton onPress={navigateToPerfil}>
+        <Image source={!!userImage ? { uri: userImage } : userIcon} />
+      </ImageButton>
     </CardHeader>
   )
 }
