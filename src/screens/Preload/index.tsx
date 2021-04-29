@@ -17,9 +17,9 @@ export function Preload() {
         const checkUser = await AsyncStorage.getItem('@plantmanager:user');
 
         if (checkUser !== null) {
-          navigation.navigate('PlantsSelect');
+          navigation.reset({ routes: [{ name: 'PlantsSelect' }] });
         } else {
-          navigation.navigate('Welcome');
+          navigation.reset({ routes: [{ name: 'Welcome' }] });
         }
       }
       fetchUsername();
