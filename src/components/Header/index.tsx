@@ -7,16 +7,19 @@ import {
   Image
 } from './styles';
 
-import user from '../../assets/douglas.jpg';
+import userIcon from '../../assets/user_icon.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function Header() {
   const [userName, setUserName] = useState<string>();
+  const [userImage, setUserImage] = useState<string>();
 
   async function loadStorageUserName() {
     const user = await AsyncStorage.getItem('@plantmanager:user');
+    const image = await AsyncStorage.getItem('@plantmanager:user_image');
 
     setUserName(user || '');
+    setUserImage(image || '');
   }
 
 
@@ -30,7 +33,7 @@ export function Header() {
         <Geetings>Olá,</Geetings>
         <Username>{userName}</Username>
       </CardGeet>
-      <Image source={user} />
+      <Image source={!!userImage ? { uri: userImage } : userIcon} />
     </CardHeader>
   )
 }
