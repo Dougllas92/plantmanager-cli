@@ -10,8 +10,7 @@ Após o fim da NLW #5 dei continuidade ao projeto que ainda está em desenvolvim
 
 - [x] Tela de preload - *Verificar se já existe um usuário criado no sistema.*
 - [x] Tela UserIdentification - *Opção de inserir foto e desabilitar button caso TextInput esteja vazio.*
-- [ ] Tela de Perfil - *Usuário poder trocar nome e foto.*
-- [ ] Tela PlantsSelect - *Criar animação no flatlist ir diminuindo o espaço do Header.*
+- [x] Tela Plantas - *Opção de alterar nome e imagem do usuário*
 - [ ] MyPlants - *Adicionar mensagem quando o usuário não tiver nenhuma planta ainda.*
 - [ ] MyPlants - *Alterar Alert para Modal personalizada.*
 
