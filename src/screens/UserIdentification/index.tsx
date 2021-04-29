@@ -79,14 +79,14 @@ export function UserIdentification() {
   }
 
   useEffect(() => {
-    async function handleVerifyStorage() {
+    async function handleCheckUserStorage() {
       const name = await AsyncStorage.getItem('@plantmanager:user');
 
       if (!!name)
         setName(name);
     }
 
-    handleVerifyStorage()
+    handleCheckUserStorage()
   }, []);
 
   return (
