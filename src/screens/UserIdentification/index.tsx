@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import ImagePicker from 'react-native-image-crop-picker';
 
@@ -78,6 +78,17 @@ export function UserIdentification() {
     }
   }
 
+  useEffect(() => {
+    async function handleVerifyStorage() {
+      const name = await AsyncStorage.getItem('@plantmanager:user');
+
+      if (!!name)
+        setName(name);
+    }
+
+    handleVerifyStorage()
+  }, []);
+
   return (
     <Wrapper>
       <Form>
@@ -104,6 +115,7 @@ export function UserIdentification() {
           onFocus={handleFocused}
           onBlur={handleBlur}
           onChangeText={handleChange}
+          value={name}
 
         />
 
