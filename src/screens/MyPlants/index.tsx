@@ -2,7 +2,7 @@ import { formatDistance } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import React, { useEffect, useState } from 'react';
 import { Header } from '../../components/Header';
-import { loadPlants, PlantProps, removePlant, StoragePlantProps } from '../../libs/storage';
+import { loadPlants, PlantProps, removePlant } from '../../libs/storage';
 import { Alert } from 'react-native';
 
 import {
@@ -12,21 +12,37 @@ import {
   SpotText,
   Plants,
   PlantsTitle,
-  PlantsFlat
+  PlantsFlat,
+  Mensagem,
+  MsgIcon,
+  MsgTitle
 } from './styles';
 
 import waterdrop from '../../assets/waterdrop.png';
 import { PlantCardSecondary } from '../../components/PlantCardSecondary';
 import { Load } from '../../components/Load';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SizedBox } from '../../components/SizedBox';
+import { Modal } from '../../components/Modal';
+
+interface modalProps {
+  id: string;
+  name: string;
+  photo: string;
+}
+
 
 export function MyPlants() {
   const [myPlants, setMyPlants] = useState<PlantProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [nextWatered, setNextWatered] = useState<string>();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalPlant, setModalPlant] = useState<modalProps>({ id: '', name: '', photo: '' });
 
   async function loadStorageData() {
     const plantsStoraged = await loadPlants();
+
+    if (plantsStoraged.length === 0)
+      return setLoading(false);
 
     const nextTime = formatDistance(
       new Date(plantsStoraged[0].dateTimeNotification).getTime(),
@@ -42,31 +58,27 @@ export function MyPlants() {
     setLoading(false);
   }
 
-  function handleRemove(plant: PlantProps) {
-    Alert.alert('Remover', `Deseja remover a ${plant.name}?`,
-      [
-        {
-          text: "Não 🙏",
-          style: 'cancel'
-        },
-        {
-          text: "Sim 😭",
-          onPress: async () => {
-            try {
+  async function handleModal(plant: PlantProps) {
+    setModalPlant(plant);
+    setModalVisible(true);
+  }
 
-              await removePlant(plant.id);
+  function handleCloseModal() {
+    setModalVisible(false);
+  }
 
-              setMyPlants((oldData) =>
-                oldData.filter((item) => item.id !== plant.id)
-              );
+  async function handleRemovePlant(plant: string) {
+    try {
+      await removePlant(plant);
 
-            } catch (error) {
-              Alert.alert('Não foi possivel remover! 😥');
-            }
-          }
-        }
-      ])
+      setMyPlants((oldData) =>
+        oldData.filter((item) => item.id !== plant)
+      );
 
+      setModalVisible(false);
+    } catch (error) {
+      Alert.alert('Não foi possivel remover! 😥');
+    }
   }
 
   useEffect(() => {
@@ -78,30 +90,53 @@ export function MyPlants() {
 
   return (
     <Wrapper>
+      <SizedBox height={50} />
       <Header />
 
-      <Spot>
-        <SpotImage source={waterdrop} />
-        <SpotText>{nextWatered}</SpotText>
-      </Spot>
+      <SizedBox height={40} />
 
-      <Plants>
-        <PlantsTitle>Próximas regadas</PlantsTitle>
+      {!!nextWatered
+        ?
+        <>
+          <Spot>
+            <SpotImage source={waterdrop} />
+            <SpotText>{nextWatered}</SpotText>
+          </Spot>
 
-        <PlantsFlat
-          data={myPlants}
-          //@ts-ignore
-          keyExtractor={(item) => String(item.id)}
-          //@ts-ignore
-          renderItem={({ item }: { item: PlantProps }) => (
-            <PlantCardSecondary
-              data={item}
-              handleRemove={() => handleRemove(item)}
+          <SizedBox height={40} />
+          <Plants>
+            <PlantsTitle>Próximas regadas</PlantsTitle>
+
+            <SizedBox height={16} />
+            <PlantsFlat
+              data={myPlants}
+              //@ts-ignore
+              keyExtractor={(item) => String(item.id)}
+              //@ts-ignore
+              renderItem={({ item }: { item: PlantProps }) => (
+                <PlantCardSecondary
+                  data={item}
+                  handleRemove={() => handleModal(item)}
+                />
+              )}
+              showsVerticalScrollIndicator={false}
             />
-          )}
-          showsVerticalScrollIndicator={false}
-        />
-      </Plants>
+          </Plants>
+        </>
+        :
+        <Mensagem>
+          <MsgIcon>😢</MsgIcon>
+          <SizedBox height={40} />
+          <MsgTitle>Você ainda não possui nenhuma {'\n'} platinha cadastrada.</MsgTitle>
+        </Mensagem>
+      }
+
+      <Modal
+        visible={modalVisible}
+        data={modalPlant}
+        onRequestClose={handleCloseModal}
+        handleRemovePlant={handleRemovePlant}
+      />
     </Wrapper>
   )
 }

@@ -45,3 +45,20 @@ export const PlantsTitle = styled.Text`
 export const PlantsFlat = styled.FlatList`
   flex: 1;
 `;
+
+export const Mensagem = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const MsgIcon = styled.Text`
+  font-size: 96px;
+`;
+
+export const MsgTitle = styled.Text`
+  font-size: ${theme.sizes.medium};
+  font-family: ${theme.family.text};
+  color: ${theme.colors.body};
+  text-align: center;
+`;
