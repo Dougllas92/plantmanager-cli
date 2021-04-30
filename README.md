@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://opensource.org/licenses/MIT">
-    <img src="https://img.shields.io/badge/License-MIT-32B768" alt="License MIT">
+    <img src="https://img.shields.io/badge/License-MIT-2B7A4B" alt="License MIT">
   </a>
   
   <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/Dougllas92/plantmanager-cli?color=2B7A4B">
@@ -31,8 +31,8 @@ Após o fim da NLW #5 dei continuidade ao projeto que ainda está em desenvolvim
 - [x] Tela de preload - *Verificar se já existe um usuário criado no sistema.*
 - [x] Tela UserIdentification - *Opção de inserir foto e desabilitar button caso TextInput esteja vazio.*
 - [x] Tela Plantas - *Opção de alterar nome e imagem do usuário*
-- [ ] MyPlants - *Adicionar mensagem quando o usuário não tiver nenhuma planta ainda.*
-- [ ] MyPlants - *Alterar Alert para Modal personalizada.*
+- [x] MyPlants - *Adicionar mensagem quando o usuário não tiver nenhuma planta ainda.*
+- [x] MyPlants - *Alterar Alert para Modal personalizada.*
 
 ### 🧪 Tecnologias
  * Node.js
