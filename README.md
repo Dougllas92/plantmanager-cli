@@ -2,6 +2,26 @@
     <img alt="PlantManager" title="PlantManager" src=".github/logo.svg" />
 </h1>
 
+<p align="center">
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/License-MIT-32B768" alt="License MIT">
+  </a>
+  
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/Dougllas92/plantmanager-cli?color=2B7A4B">
+
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/Dougllas92/plantmanager-cli?color=2B7A4B">
+
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/Dougllas92/plantmanager-cli?color=2B7A4B">
+  
+  <a href="https://github.com/Fekleite/plantmanager/commits/master">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/Dougllas92/plantmanager-cli?color=2B7A4B">
+  </a>
+
+  <a href="https://github.com/Dougllas92/plantmanager-cli/issues">
+    <img alt="Repository issues" src="https://img.shields.io/github/issues/Dougllas92/plantmanager-cli?color=2B7A4B">
+  </a>
+</p>
+
 <img src=".github/plantmanager-preview.png" alt="Plant Manager">
 
 ### 🚧 Ajustes e melhorias
